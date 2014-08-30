@@ -1,0 +1,36 @@
+{
+  "name": "ccs",
+  "repo": "https://github.com/littlehateliu/ccs.git",
+  "description": "hello world",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "ksanaforge/boot": "*",
+    "brighthas/bootstrap": "*",
+    "ccs/main": "*",
+    "ccs/comp1": "*",
+    "ccs/dataset": "*",
+    "ccs/api": "*",
+    "ccs/collections": "*",
+    "ccs/titles": "*",
+    "ccs/authors": "*",
+    "ccs/inputs": "*",
+    "ccs/titlelist": "*"
+  },
+  "development": {},
+  "paths": [
+    "components",
+    "../components",
+    "../../components",
+    "../node_modules/",
+    "../../node_modules/"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "index.css"
+  ]
+}
