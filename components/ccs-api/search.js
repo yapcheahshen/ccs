@@ -55,7 +55,7 @@ var getTitleGroup=function(D,at) {
 
 var findTitleByAuthor=function(author) {
 	if (typeof author=="number") {
-		authorid=-author;
+		authorid=-author - 1;
 	} else {
 	  var authorid=dataset.authors.indexOf(author);
 	  if (authorid==-1) return [];

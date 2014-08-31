@@ -26,38 +26,48 @@ var authorList=React.createClass({
   }
 });
 var titleByAuthorList=React.createClass({
-  renderTitle:function() {
+  renderTitle:function(T) {
+    var r=[];
+    for (var i=0;i<T.length;i++) {
+      var entry=T[i];
+      if (entry>0) {
+        r.push(<span> {dataset.titlenames[entry-1]}</span>);
+      } else {
+        var extra="";
+        entry=-entry-1;
+        if (entry==this.props.authorid) extra=" disabled"
+        r.push(<button className={"btn btn-warning btn-xs"+extra}>{dataset.authors[entry]}</button>);
+      }
+    }
+    return r;
+  },
+  renderItem:function(T) {
+    return <div>
+      <button className="btn btn-primary btn-xs">{dataset.collnames[T[0]]}</button>
+      {this.renderTitle(T[1])}
+    </div>
   },
   render:function() {
     return <div>
-    <titleList/>
+      {this.props.titles.map(this.renderItem)}
     </div>
   }
 });
 
 var authors = React.createClass({
-  shouldComponentUpdate:function(nextProps,nextState ) {
-    var shouldupdate=(nextProps.author!=this.state.author || 
-            nextState.author!=this.state.author || nextState.authors!=this.state.authors);
-    if (nextProps.author!=this.state.author) {
-      nextState.author=nextProps.author;
-    }
-    return shouldupdate;
-  }, 
   componentWillUpdate:function() {
     api.search.findTitleByAuthor(this.state.author);
   },
   getInitialState: function() {
-    return {author: this.props.author, authors:[]};
+    return {author: this.props.author, authors:[] ,titles:[]};
   },
   authorchanged:function(tofind) {
     var res=api.search.findAuthor(tofind);
     this.setState({authors:res});
   },
-  setauthor:function(author) {
-    var res=api.search.findTitleByAuthor(author);
-    console.log(res);
-
+  setauthor:function(authorid) {
+    var res=api.search.findTitleByAuthor(authorid);
+    this.setState({titles:res,authorid:authorid});
   },
   render: function() {
     return (
@@ -65,7 +75,7 @@ var authors = React.createClass({
         <inputs ref="tofind" 
           placeholder="作者" def="貫" onChange={this.authorchanged}></inputs>
         <authorList setauthor={this.setauthor} authors={this.state.authors}/>
-        <titleByAuthorList/>
+        <titleByAuthorList authorid={this.state.authorid} titles={this.state.titles}/>
       </div>
     );
   }

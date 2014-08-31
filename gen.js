@@ -26,12 +26,7 @@ var convertfile=function(fn) {
 	var arr=fs.readFileSync(fn,"utf8").split(/\r?\n/);
 	for (var i=0;i<arr.length;i++) {
 		var s=arr[i];
-		if (s.substr(0,5)=="<_ id") {
-			cid=parseInt(s.substr(7));
-			collections.push([] );
-			collinfos.push([this+pb]);
-		} 
-		else if (s.indexOf("<ti")>-1) parseTitle(s);
+		if (s.indexOf("<ti")>-1) parseTitle(s);
 		else if (s.substr(0,4)=="<pb ") {
 			var p=s.substr(7);
 			if (p[0]=='"') p=p.substr(1);
@@ -40,6 +35,8 @@ var convertfile=function(fn) {
 		else if (s.indexOf("<coll")>-1) {
 			var m=s.match(/<coll.*?>(.*?)<\/coll>/);
 			if (m) {
+				collections.push([] );
+				collinfos.push([this+pb]);
 				collname.push(m[1]);
 			}
 
