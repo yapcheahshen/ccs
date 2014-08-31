@@ -26,6 +26,10 @@ var authorList=React.createClass({
   }
 });
 var titleByAuthorList=React.createClass({
+  selectAuthor:function(e) {
+    var author=parseInt(e.target.dataset['author']);
+    this.props.setauthor(author);
+  },  
   renderTitle:function(T) {
     var r=[];
     for (var i=0;i<T.length;i++) {
@@ -35,8 +39,15 @@ var titleByAuthorList=React.createClass({
       } else {
         var extra="";
         entry=-entry-1;
-        if (entry==this.props.authorid) extra=" disabled"
-        r.push(<button className={"btn btn-warning btn-xs"+extra}>{dataset.authors[entry]}</button>);
+        var handler=this.selectAuthor;
+        if (entry==this.props.authorid) {
+          extra=" disabled";
+          handler=null;
+        }
+        r.push(<button onClick={handler} 
+          data-author={entry}
+          className={"btn btn-warning btn-xs"+extra}
+        >{dataset.authors[entry]}</button>);
       }
     }
     return r;
@@ -74,8 +85,10 @@ var authors = React.createClass({
       <div>
         <inputs ref="tofind" 
           placeholder="作者" def="貫" onChange={this.authorchanged}></inputs>
-        <authorList setauthor={this.setauthor} authors={this.state.authors}/>
-        <titleByAuthorList authorid={this.state.authorid} titles={this.state.titles}/>
+        <authorList setauthor={this.setauthor} 
+            authors={this.state.authors}/>
+        <titleByAuthorList setauthor={this.setauthor} 
+            authorid={this.state.authorid} titles={this.state.titles}/>
       </div>
     );
   }
