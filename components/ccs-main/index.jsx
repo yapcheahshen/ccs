@@ -9,13 +9,18 @@ var api=Require("api");
 
 var main = React.createClass({
   getInitialState: function() {
-    return {};
+    return {titles:[],author:"",colls:[],coll:""};
   },
   tofindchanged:function(tofind) {
-    
+    var titles=api.search.findTitle(tofind);
+    var colls=api.search.findCollection(tofind);
+    this.setState({titles:titles,colls:colls});
   },
   setAuthor:function(author) {
     this.setState({author:author});
+  },
+  setColl:function(coll) {
+    this.setState({coll:coll});
   },
   render: function() {
     return ( 
@@ -23,14 +28,19 @@ var main = React.createClass({
         <h2>中國叢書目錄檢索系統</h2>
         <div>
         <div className="col-md-4">
-          <inputs placeholder="書名" onChange={this.tofindchanged}></inputs>
-          <titleList/>
+          <inputs def="農" placeholder="書名" onChange={this.tofindchanged}></inputs>
+          <titleList onCollChanged={this.setColl} titles={this.state.titles}/>
         </div>
         <div className="col-md-4">
-          <collections onAuthorChange={this.setAuthor}></collections>
+          <collections 
+             coll={this.state.coll} 
+             colls={this.state.colls} 
+             onAuthorChanged={this.setAuthor} />
         </div>
         <div className="col-md-4">
-          <authors author={this.state.author}></authors>
+          <authors 
+             onCollChanged={this.setColl} 
+             author={this.state.author}></authors>
         </div>
         </div>
       </div>

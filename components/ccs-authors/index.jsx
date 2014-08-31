@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
-
-//var othercomponent=Require("other"); 
+/* show directly when only one candidate */
 var titleList=Require("titlelist");
+var titles=Require("titles");
 var api=Require("api");
 var inputs=Require("inputs");
 var dataset=Require("dataset"); 
@@ -26,36 +26,10 @@ var authorList=React.createClass({
   }
 });
 var titleByAuthorList=React.createClass({
-  selectAuthor:function(e) {
-    var author=parseInt(e.target.dataset['author']);
-    this.props.setauthor(author);
-  },  
-  renderTitle:function(T) {
-    var r=[];
-    for (var i=0;i<T.length;i++) {
-      var entry=T[i];
-      if (entry>0) {
-        r.push(<span> {dataset.titlenames[entry-1]}</span>);
-      } else {
-        var extra="";
-        entry=-entry-1;
-        var handler=this.selectAuthor;
-        if (entry==this.props.authorid) {
-          extra=" disabled";
-          handler=null;
-        }
-        r.push(<button onClick={handler} 
-          data-author={entry}
-          className={"btn btn-warning btn-xs"+extra}
-        >{dataset.authors[entry]}</button>);
-      }
-    }
-    return r;
-  },
   renderItem:function(T) {
     return <div>
       <button className="btn btn-primary btn-xs">{dataset.collnames[T[0]]}</button>
-      {this.renderTitle(T[1])}
+      <titles onAuthorChanged={this.props.setauthor} titles={T[1]} authorid={this.props.authorid}/>
     </div>
   },
   render:function() {
@@ -67,7 +41,17 @@ var titleByAuthorList=React.createClass({
 
 var authors = React.createClass({
   componentWillUpdate:function() {
-    api.search.findTitleByAuthor(this.state.author);
+    //api.search.findTitleByAuthor(this.state.author);
+  },
+  shouldComponentUpdate:function(nextProps,nextState) {
+    if (nextProps.author!=this.props.author) {
+      nextState.author=nextProps.author;
+      var author=nextState.author, that=this;
+      setTimeout(function(){
+        that.setauthor(author);
+      },10);
+    }
+    return true;
   },
   getInitialState: function() {
     return {author: this.props.author, authors:[] ,titles:[]};

@@ -1,19 +1,35 @@
 /** @jsx React.DOM */
 
-//var othercomponent=Require("other"); 
+var dataset=Require("dataset"); 
 var titles = React.createClass({
-  getInitialState: function() {
-    return {bar: "world"};
+  selectAuthor:function(e) {
+    var author=parseInt(e.target.dataset['author']);
+    this.props.onAuthorChanged(author);
+  },  
+  renderTitle:function(T) {
+    var r=[];
+    for (var i=0;i<T.length;i++) {
+      var entry=T[i];
+      if (entry>0) {
+        r.push(<span> {dataset.titlenames[entry-1]}</span>);
+      } else {
+        var extra="";
+        entry=-entry-1;
+        var handler=this.selectAuthor;
+        if (entry==this.props.authorid) {
+          extra=" disabled";
+          handler=null;
+        }
+        r.push(<button onClick={handler} 
+          data-author={entry}
+          className={"btn btn-warning btn-xs"+extra}
+        >{dataset.authors[entry]}</button>);
+      }
+    }
+    return r;
   },
   render: function() {
-    return (
-      <div>
-        <p><span className="title">讀書筆記</span> <a className="btn btn-warning btn-xs">祝允明</a><br/>
-           <a className="btn btn-primary btn-xs">廣說郛</a> <a className="btn btn-primary btn-xs">稗統</a></p>
-        <p><span className="title">仁恕堂筆記</span> 　<a className="btn btn-warning btn-xs">黎士弘</a><br/>
-        <a className="btn btn-primary btn-xs">賜硯堂叢書未刻稿</a></p>
-      </div>
-    );
+    return <span>{this.renderTitle(this.props.titles)}</span>
   }
 });
 module.exports=titles;

@@ -79,8 +79,24 @@ var findAuthor=function(author) {
 	var pat=new RegExp(author);
 	return searchStrings(pat,dataset.authors);
 }
+var findTitle=function(title) {
+  if (!title.trim()) return [];
+  var pat=new RegExp(title);
+  var res=searchStrings(pat,dataset.titlenames); 
+  if (res.length>100) res.length=100;
+  return res;
+}
+var findCollection=function(coll) {
+  if (!coll.trim()) return [];
+  var pat=new RegExp(coll);
+  var res=searchStrings(pat,dataset.collnames); 
+  if (res.length>50) res.length=50;
+  return res;
+}
 module.exports={
   findTitleByAuthor:findTitleByAuthor,
+  findTitle:findTitle,
   getTitleGroup:getTitleGroup,
-  findAuthor:findAuthor
+  findAuthor:findAuthor,
+  findCollection:findCollection
 }

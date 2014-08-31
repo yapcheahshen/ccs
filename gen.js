@@ -3,14 +3,17 @@ var fs=require("fs");
 var cid=0;// collection id
 var ti={}, pr={} , ticount=0, prcount=0;
 var collections=[],collinfos=[];
-var titlename=[],author=[],collname=[],pb=0;
+var titlename=[],author=[],collname=[],pb=0,titlecoll=[];
 var target="components/ccs-dataset/";
 var parseTitle=function(line) {
 	var coll=collections[collections.length-1];
 	line.replace(/<ti(.*?)>(.+?)<\/ti>/g,function(m,m1,m2){
 		if (!ti[m2]) {
+			titlecoll[ticount]=[];
 			ti[m2]=++ticount;
 		}
+		
+		titlecoll[ti[m2]-1].push(collections.length-1);
 		coll.push(ti[m2]);
 	});
 
@@ -53,6 +56,14 @@ var formats=function() {
 		collinfos[i]=JSON.stringify(collinfos[i],"","").replace(",[]","");
 	}
 
+	for (var i=0;i<titlecoll.length;i++) {
+		if (titlecoll[i].length==1) {
+			titlecoll[i]=JSON.stringify(titlecoll[i][0],"","");
+		} else {
+			titlecoll[i]=JSON.stringify(titlecoll[i],"","");	
+		}
+	}
+
 	for (var i in ti) titlename.push(i);
 	for (var i in pr) author.push(i);
 
@@ -64,6 +75,8 @@ var finalize=function() {
 	fs.writeFileSync(target+"collnames.js","module.exports="+JSON.stringify(collname,""," "),"utf8");
 	fs.writeFileSync(target+"titlenames.js","module.exports="+JSON.stringify(titlename,""," "),"utf8");
 	fs.writeFileSync(target+"authors.js","module.exports="+JSON.stringify(author,""," "),"utf8");
+	fs.writeFileSync(target+"titlecoll.js","module.exports=["+titlecoll.join(",\n")+"]","utf8");
+	
 }
 
 glob("guanglu/*.xml",function(err,files){
