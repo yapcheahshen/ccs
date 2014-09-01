@@ -5,6 +5,11 @@ var titlelist = React.createClass({
   getInitialState: function() {
     return {bar: "world"};
   }, 
+  setColl:function(e) {
+    var coll=parseInt(e.target.dataset['coll']);
+    var title=parseInt(e.target.parentNode.dataset['title']);
+    this.props.onCollChanged(coll,title);
+  },
   showCollection:function(title) {
     var colls=dataset.titlecoll[title];
     var res=[];
@@ -12,13 +17,15 @@ var titlelist = React.createClass({
 
     for (var i=0;i<colls.length;i++) {
         var collname=dataset.collnames[colls[i]];
-        res.push(<a className="btn btn-primary btn-xs">{collname}</a>);
+        res.push(<a 
+          data-coll={colls[i]}
+          onClick={this.setColl} className="btn btn-primary btn-xs">{collname}</a>);
     }
     return res;
   }, 
   renderItem:function(title) {
     return (
-    <p><span className="title">{dataset.titlenames[title]}</span>
+    <p data-title={title+1}><span className="title">{dataset.titlenames[title]}</span>
     {this.showCollection(title)}
     </p>);
   },

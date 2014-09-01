@@ -2,16 +2,18 @@
 
 var dataset=Require("dataset"); 
 var titles = React.createClass({
-  selectAuthor:function(e) {
+  selectAuthor:function(e) { 
     var author=parseInt(e.target.dataset['author']);
     this.props.onAuthorChanged(author);
   },  
   renderTitle:function(T) {
     var r=[];
     for (var i=0;i<T.length;i++) {
+      var selected="";
       var entry=T[i];
+      if (entry==this.props.title) selected="selected_title";
       if (entry>0) {
-        r.push(<span> {dataset.titlenames[entry-1]}</span>);
+        r.push(<span className={selected}>{dataset.titlenames[entry-1]}</span>);
       } else {
         var extra="";
         entry=-entry-1;

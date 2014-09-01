@@ -24,17 +24,25 @@ var titleInCollection = React.createClass({
     var titlesInCollection=dataset.collections[this.props.coll] || [];
     return <div>
       <h2>{dataset.collnames[this.props.coll]}</h2>
-      <titles onAuthorChanged={this.setAuthor} titles={titlesInCollection}/>
+      <titles onAuthorChanged={this.setAuthor} 
+        titles={titlesInCollection}
+        title={this.props.title} />
     </div>
   }
 });
 /* show directly when only one candidate */
 var collections = React.createClass({
   getInitialState: function() {
-    return {bar: "world",coll:this.props.coll};
+    return {coll:this.props.coll};
   },
-  shouldComponentUpdate:function(nextProps) {
-    if (nextProps.coll!=this.props.coll) nextState.coll=nextProps.coll;
+  shouldComponentUpdate:function(nextProps,nextState) {
+    if (nextProps.coll!=this.props.coll) {
+      nextState.coll=nextProps.coll;
+    }
+    if (nextProps.title!=this.props.title) {
+      nextState.title=nextProps.title;
+    }
+
     return true;
   },
   setColl:function(coll) {
@@ -47,7 +55,10 @@ var collections = React.createClass({
     return (
       <div>
         <collectionList onCollChanged={this.setColl} colls={this.props.colls}/>
-        <titleInCollection onAuthorChanged={this.setAuthor} coll={this.state.coll}/>
+        <titleInCollection 
+         onAuthorChanged={this.setAuthor} 
+         title={this.props.title}
+         coll={this.state.coll}/>
       </div>
     );
   }

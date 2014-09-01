@@ -19,21 +19,24 @@ var main = React.createClass({
   setAuthor:function(author) {
     this.setState({author:author});
   },
-  setColl:function(coll) {
-    this.setState({coll:coll});
+  setColl:function(coll,title) {
+    this.setState({coll:coll,title:title});
   },
   render: function() {
     return ( 
       <div>
         <h2>中國叢書目錄檢索系統</h2>
+
         <div>
         <div className="col-md-4">
           <inputs def="農" placeholder="書名" onChange={this.tofindchanged}></inputs>
-          <titleList onCollChanged={this.setColl} titles={this.state.titles}/>
+          <titleList onCollChanged={this.setColl} 
+          titles={this.state.titles}/>
         </div>
         <div className="col-md-4">
           <collections 
              coll={this.state.coll} 
+             title={this.state.title} 
              colls={this.state.colls} 
              onAuthorChanged={this.setAuthor} />
         </div>
