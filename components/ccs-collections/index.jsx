@@ -24,6 +24,7 @@ var titleInCollection = React.createClass({
     var titlesInCollection=dataset.collections[this.props.coll] || [];
     return <div>
       <h2>{dataset.collnames[this.props.coll]}</h2>
+      <h3>{dataset.collinfos[this.props.coll]}</h3>
       <titles onAuthorChanged={this.setAuthor} 
         titles={titlesInCollection}
         title={this.props.title} />

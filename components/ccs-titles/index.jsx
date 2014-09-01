@@ -13,7 +13,7 @@ var titles = React.createClass({
       var entry=T[i];
       if (entry==this.props.title) selected="selected_title";
       if (entry>0) {
-        r.push(<span className={selected}>{dataset.titlenames[entry-1]}</span>);
+        r.push(<span className={selected}>{dataset.titlenames[entry-1]} </span>);
       } else {
         var extra="";
         entry=-entry-1;
