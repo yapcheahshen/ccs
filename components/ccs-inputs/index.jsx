@@ -19,7 +19,7 @@ var inputs = React.createClass({
   render: function() { 
     return (
       <div>
-        <input placeholder={this.props.placeholder} ref="tofind" onKeyPress={this.onkeypress} onInput={this.oninput}
+        [[[<input placeholder={this.props.placeholder} ref="tofind" onKeyPress={this.onkeypress} onInput={this.oninput}
           className="input input-lg form-control" defaultValue={this.state.deftofind}></input>
       </div>
     );
