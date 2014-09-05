@@ -10,5 +10,5 @@
   "main": "index.js",
   "scripts": ["index.js","authors.js","titlenames.js",
     "collinfos.js","collnames.js","collections.js","titlecoll.js"],
-  "styles": ["index.css"]
+  "styles": []
 }
