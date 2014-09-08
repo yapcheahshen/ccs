@@ -6,10 +6,14 @@ A. first time to run ccs
 0F._gulp
 10._start http://127.0.0.1:2556/
 
-B. next time to rebuild and run ccs
-00._cd \dev2014\ccs
-01._gulp
-02._start http://127.0.0.1:2556/
+B. next time to modify, rebuild, and run ccs
+00._modify *.jsx
+01._goto chrome://appcache-internals/
+02._find Manifest: http://127.0.0.1:2556/offline.appcache
+03._click Remove (to clear cache)
+04._cd \dev2014\ccs
+05._gulp
+06._start http://127.0.0.1:2556/
 
 C. next time to run ccs
 00._start http://127.0.0.1:2556/

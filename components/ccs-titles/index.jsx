@@ -14,7 +14,7 @@ var titles = React.createClass({
       if (entry==this.props.title) selected="selected_title";
       if (entry>0) {
         r.push(<span className={selected}>{dataset.titlenames[entry-1]} </span>);
-      } else {
+      } else if (entry<0) {				// 20140908 sam
         var extra="";
         entry=-entry-1;
         var handler=this.selectAuthor;
@@ -26,7 +26,9 @@ var titles = React.createClass({
           data-author={entry}
           className={"btn btn-warning btn-xs"+extra}
         >{dataset.authors[entry]}</button>);
-      }
+      } else {							// 20140908 sam
+        r.push(<br/>);		// 20140908 sam
+      }									// 20140908 sam
     }
     return r;
   },

@@ -7,14 +7,15 @@ var titlename=[],author=[],collname=[],pb=0,titlecoll=[];
 var target="components/ccs-dataset/";
 var parseTitle=function(line) {
 	var coll=collections[collections.length-1];
+	var n=0; // 20140907 sam
 	line.replace(/<ti(.*?)>(.+?)<\/ti>/g,function(m,m1,m2){
 		if (!ti[m2]) {
 			titlecoll[ticount]=[];
 			ti[m2]=++ticount;
 		}
-		
 		titlecoll[ti[m2]-1].push(collections.length-1);
 		coll.push(ti[m2]);
+		n++; // 20140907 sam
 	});
 
 	line.replace(/<pr(.*?)>(.+?)<\/pr>/g,function(m,m1,m2){
@@ -22,8 +23,9 @@ var parseTitle=function(line) {
 			pr[m2]=++prcount;
 		}
 		coll.push(-pr[m2]); //minus
+		n++;  // 20140907 sam
 	});
-
+	if(n) coll.push(0); // end-of-line // 20140907 sam
 }
 var convertfile=function(fn) {
 	var arr=fs.readFileSync(fn,"utf8").split(/\r?\n/);
