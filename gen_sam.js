@@ -15,20 +15,22 @@ var did=0;					// 朝代序號 dynasty	   id			代表 朝代字串 (不相同字
 var aid=0;					// 人名序號 author	   id			代表 人名字串 (不相同字串)
 var acode;					// 人碼字串 author	   code hex數碼	(人名序號_8bit朝代序號)
 var tcode;					// 書碼字串 title	   code hex數碼 (書名序號_8bit卷數序號_16bit首位著者序號)
-var colls=[''];				// 蒐集 coll 叢名字串
-var titles=[''];			// 蒐集 title 書名字串
-var juans=[''];				// 蒐集 juan 卷數字串
+var colls=[''];				// 蒐集 coll	叢名字串
+var titles=[''];			// 蒐集 title	書名字串
+var juans=[''];				// 蒐集 juan	卷數字串
 var dynastys=[''];			// 蒐集 dynasty 朝代字串
-var authors=[''];			// 蒐集 author 人名字串
+var authors=[''];			// 蒐集 author	人名字串
 var ti={};					// ti[書名字串]=tid (從 1 起算)
 var au={};					// au[人名字串]=aid (從 1 起算)
-var cpages  =[];			// 每列 以 list 記錄 集 所含 頁碼資訊 ('g' 或 'z' 加 pid)	集-->頁
-var cauthors=[];			// 每列 以 list 記錄 集 所有 編者序號						集-->人
-var ctcodes =[];			// 每列 以 list 記錄 集 所含 書碼序號						集-->書
-var bcolls  =[];			// 每列 以 list 記錄 書 所屬 叢名序號						書-->集
-var bauthors=[];			// 每列 以 list 記錄 書 所有 著者序號						書-->人
-var atcodes =[];			// 每列 以 list 記錄 人 所著 書碼序號						人-->集
-var acolls  =[];			// 每列 以 list 記錄 人 所編 叢名序號						人-->書
+var ju={};					// ju[卷數字串]=jid (從 1 起算)
+var dy={};					// dy[朝代字串]=did (從 1 起算)
+var cpage	=[];			// 每列 		記錄 叢名 出處 來源字串_頁碼字串			叢-->頁
+var cauthors=[];			// 每列 以 list 記錄 叢名 所有 編者序號						叢-->人
+var ctcodes =[];			// 每列 以 list 記錄 叢名 所含 書碼序號						叢-->書
+var bcolls  =[];			// 每列 以 list 記錄 書碼 所屬 叢名序號						書-->叢
+var bauthors=[];			// 每列 以 list 記錄 書碼 所有 著者序號						書-->人
+var atcodes =[];			// 每列 以 list 記錄 人碼 所著 書碼序號						人-->叢
+var acolls  =[];			// 每列 以 list 記錄 人碼 所編 叢名序號						人-->書
 var target="tst-dataset/";	// 檔案寫出 指定資料夾
 var valid=function(id){
 	return id;				// 非 0 的資料
