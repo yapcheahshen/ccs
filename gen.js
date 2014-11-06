@@ -27,8 +27,24 @@ var parseTitle=function(line) {
 	});
 	if(n) coll.push(0); // end-of-line // 20140907 sam
 }
+var co={};
 var convertfile=function(fn) {
-	var arr=fs.readFileSync(fn,"utf8").split(/\r?\n/);
+	var txt=fs.readFileSync(fn,"utf8");
+	var Co=txt.split(/<_ id="\d+\.(.+?)"\/>\r\n/);
+	Co.forEach(function(coll){
+		var m=coll.match(/<pb.*?\/>/)
+		m=coll.match(/<coll.*?>(.+?)<\/coll>/);
+		if(m){
+			var x=coll;
+			x=x.replace(/JUAN/g,'卷');
+			x=x.replace(/　　　<note>/g,'<br>　　　<note>');
+			x=x.replace(/\r\n　/g,'<br>');
+			x=x.replace(/\r\n<pb.*?\/>/g,'');
+			x=x.replace(/\r\n/g,'');
+			co[m[1]]=x;
+		}
+	});
+	var arr=txt.split(/\r?\n/);
 	for (var i=0;i<arr.length;i++) {
 		var s=arr[i];
 		if (s.indexOf("<ti")>-1) parseTitle(s);
@@ -41,7 +57,7 @@ var convertfile=function(fn) {
 			var m=s.match(/<coll.*?>(.*?)<\/coll>/);
 			if (m) {
 				collections.push([] );
-				collinfos.push([this+pb]);
+				collinfos.push([this+pb+'<br>'+co[m[1]]]);
 				collname.push(m[1]);
 			}
 
@@ -80,7 +96,7 @@ var finalize=function() {
 	fs.writeFileSync(target+"titlecoll.js","module.exports=["+titlecoll.join(",\n")+"]","utf8");
 	
 }
-
+debugger
 glob("guanglu/*.xml",function(err,files){
 	files.map(convertfile,"g");
 	glob("zonglu/*.xml",function(err,files2){

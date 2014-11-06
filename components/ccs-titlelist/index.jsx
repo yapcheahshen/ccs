@@ -19,7 +19,7 @@ var titlelist = React.createClass({
         var collname=dataset.collnames[colls[i]];
         res.push(<a 
           data-coll={colls[i]}
-          onClick={this.setColl} className="btn btn-primary btn-xs">{collname}</a>);
+          onClick={this.setColl} className="btn btn-primary">{collname}</a>);
     }
     return res;
   }, 

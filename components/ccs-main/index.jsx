@@ -5,6 +5,7 @@ var authors=Require("authors");
 var collections=Require("collections");
 var inputs=Require("inputs");
 var titleList=Require("titlelist");
+var collectionlist=Require("collectionlist");
 var api=Require("api");
 
 var main = React.createClass({
@@ -21,17 +22,20 @@ var main = React.createClass({
   },
   setColl:function(coll,title) {
     this.setState({coll:coll,title:title});
-  },
+  }, 
   render: function() {
     return ( 
-      <div>
+      <div className="main">
         <h2>中國古籍叢書目錄檢索系統</h2>
 
         <div>
         <div className="col-md-4">
           <inputs def="農" placeholder="書名" onChange={this.tofindchanged}></inputs>
+          <collectionlist onCollChanged={this.setColl} colls={this.state.colls}/>
           <titleList onCollChanged={this.setColl} 
           titles={this.state.titles}/>
+
+          
         </div>
         <div className="col-md-4">
           <collections 

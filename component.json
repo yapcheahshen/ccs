@@ -15,7 +15,8 @@
     "ccs/titles": "*",
     "ccs/authors": "*",
     "ccs/inputs": "*",
-    "ccs/titlelist": "*"
+    "ccs/titlelist": "*",
+    "ccs/collectionlist": "*"
   },
   "development": {},
   "paths": [
