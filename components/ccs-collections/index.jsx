@@ -14,10 +14,11 @@ var titleInCollection = React.createClass({
   },
   render:function() {
     var titlesInCollection=dataset.collections[this.props.coll] || [];
+    var collinfo=dataset.collinfos[this.props.coll];
     return <div>
-      <h3 onClick={this.clicked} dangerouslySetInnerHTML={{__html:dataset.collinfos[this.props.coll]}} />
+      <h3 onClick={this.clicked} dangerouslySetInnerHTML={{__html:collinfo}} />
       <titles onAuthorChanged={this.setAuthor} 
-        titles={titlesInCollection}
+        titles={titlesInCollection} coll={this.props.coll}
         title={this.props.title} />
     </div>
   }
